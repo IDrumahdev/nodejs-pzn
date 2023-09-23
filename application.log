@@ -1,0 +1,8 @@
+Hello Heri
+Hello Purwanto
+┌───────────┬────────────┐
+│  (index)  │   Values   │
+├───────────┼────────────┤
+│ firstName │   'Heri'   │
+│ lastName  │ 'Purwanto' │
+└───────────┴────────────┘
