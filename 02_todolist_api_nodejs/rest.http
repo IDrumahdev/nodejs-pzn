@@ -1,0 +1,2 @@
+### Root Endpoint
+GET http://localhost:3300 HTTP/1.1
