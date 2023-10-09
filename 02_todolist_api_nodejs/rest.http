@@ -1,2 +1,30 @@
-### Root Endpoint
+### Get All
 GET http://localhost:3300 HTTP/1.1
+
+### Create Data
+POST http://localhost:3300 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "todo" : "Belajar Nodejs"
+}
+
+### Update Data
+PUT http://localhost:3300 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "id" : 0,
+    "todo" : "Belajar Javascript"
+}
+
+### Delete Data
+DELETE http://localhost:3300 HTTP/1.1
+Content-Type: application/json,
+Accept: application/json
+
+{
+    "id" : 1
+}
