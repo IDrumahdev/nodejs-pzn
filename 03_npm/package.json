@@ -1,0 +1,21 @@
+{
+  "name": "belajar-nodejs-npm",
+  "version": "1.0.0",
+  "description": "Belajar Node js NPM",
+  "main": "index.js",
+  "homepage": "https://rumahdev.pro/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IDrumahdev/nodejs-pnz"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rumahdev",
+    "nodejs",
+    "npm"
+  ],
+  "author": "ibnudirsan",
+  "license": "ISC"
+}
