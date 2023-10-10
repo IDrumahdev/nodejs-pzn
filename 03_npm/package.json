@@ -25,5 +25,8 @@
   ],
   "author": "ibnudirsan",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "lodash" : "4.17.21"
+  }
 }
