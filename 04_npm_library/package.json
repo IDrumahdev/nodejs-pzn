@@ -1,6 +1,6 @@
 {
   "name": "rumahdev-librarypzn",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Belajar Nodejs NPM",
   "main": "index.js",
   "type": "module",
@@ -14,5 +14,9 @@
     "PZN"
   ],
   "author": "ibnudirsan",
-  "license": "ISC"
+  "license": "ISC",
+  "exports" : {
+    "." : "./index.js",
+    "./number" : "./number.js"
+  }
 }
