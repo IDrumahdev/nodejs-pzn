@@ -1,0 +1,28 @@
+{
+  "name": "unit-test-nodejs",
+  "version": "1.0.0",
+  "description": "Belajar Unit Test Node.js",
+  "main": "./src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
+  "keywords": [
+    "Unit",
+    "Test",
+    "Nodejs",
+    "Rumahdev"
+  ],
+  "author": "ibnudirsan",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.20",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  }
+}
