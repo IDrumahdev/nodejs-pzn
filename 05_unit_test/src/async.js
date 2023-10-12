@@ -9,3 +9,11 @@ export const sayHelloAsync = (name) => {
         }, 1000);
     });
 };
+
+export const getBalance = async (name, form) => {
+    const balance = await form();
+    return {
+        name : name,
+        balance : balance
+    }
+};
