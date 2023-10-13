@@ -6,3 +6,6 @@
 {"level":"verbose","message":"Hello Verbose","ms":"+0ms","timestamp":"2023-10-13T08:33:40.071Z"}
 {"level":"debug","message":"Hello Debug","ms":"+0ms","timestamp":"2023-10-13T08:33:40.071Z"}
 {"level":"silly","message":"Hello Silly","ms":"+1ms","timestamp":"2023-10-13T08:33:40.072Z"}
+{"level":"error","message":"Hello Error","ms":"+0ms","timestamp":"2023-10-13T08:39:18.200Z"}
+{"level":"warn","message":"Hello Warn","ms":"+2ms","timestamp":"2023-10-13T08:39:18.202Z"}
+{"level":"info","message":"Hello Info","ms":"+0ms","timestamp":"2023-10-13T08:39:18.202Z"}
