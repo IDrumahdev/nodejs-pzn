@@ -1,6 +1,6 @@
 import Mustache from 'mustache';
 
-test("Menggunkan Mustache", () => {
+test("Menggunkan Mustache Cache", () => {
 
     Mustache.parse("Hello {{name}}");
 
