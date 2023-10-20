@@ -1,0 +1,31 @@
+{
+  "name": "rumahdev_nodejs_database_prisma_orm",
+  "version": "1.0.0",
+  "description": "Belajar Nodejs Database",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
+  "keywords": [
+    "Database",
+    "Prisma",
+    "ORM",
+    "Nodejs",
+    "Expressjs"
+  ],
+  "author": "ibnudirsan",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "@types/jest": "^29.5.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "prisma": "^5.4.2"
+  }
+}
