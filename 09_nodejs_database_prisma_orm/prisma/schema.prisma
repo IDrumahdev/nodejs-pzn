@@ -16,10 +16,11 @@ model sample {
 }
 
 model Customer {
-  id    String @id
-  name  String
-  email String @unique
-  phone String @unique
+  id      String @id @db.VarChar(100)
+  name    String
+  email   String @unique
+  phone   String @unique
+  wallet  Wallet?
 
   @@map("customers")
 }
@@ -39,4 +40,13 @@ model Category {
   name String @db.VarChar(100)
 
   @@map("categories")
+}
+
+model Wallet {
+  id          String @id @db.VarChar(100)
+  balance     Int
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String @unique
+
+  @@map("wallet")
 }
