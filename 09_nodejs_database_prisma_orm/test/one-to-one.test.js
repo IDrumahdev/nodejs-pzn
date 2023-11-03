@@ -50,4 +50,19 @@ describe('Prisma Clinet Relasi', () => {
 
         console.info(customer);
     });
+
+    it('find many one to one', async () => {
+        const customers = await prismaClient.customer.findMany({
+            where: {
+                wallet: {
+                    isNot: null
+                }
+            },
+            include: {
+                wallet: true
+            }
+        });
+        console.info(customers);
+    });
+
 });
