@@ -22,4 +22,32 @@ describe('Prisma Clinet Create Many', () => {
         expect(count).toBe(2);
 
     });
+
+    it('update many result', async () => {
+        const {count} = await prismaClient.customer.updateMany({
+            data : {
+                email: "data@example.com"
+            },
+            where: {
+                name : "ibnu"
+            }
+        });
+
+        expect(count).toBe(1);
+    });
+
+    it('delete many result', async () => {
+      const {count} = await prismaClient.customer.deleteMany({
+            where: {
+                name : "Tidak Ada"
+            }
+        });
+
+        expect(count).toBe(0);
+    });
+
+    it('read many result', async () => {
+        const customer = await prismaClient.customer.findMany({});
+        expect(customer.length).toBe(6);
+    });
 });
