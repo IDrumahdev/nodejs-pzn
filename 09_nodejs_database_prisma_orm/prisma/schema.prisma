@@ -42,6 +42,7 @@ model Category {
   @@map("categories")
 }
 
+// Relasi One To One
 model Wallet {
   id          String @id @db.VarChar(100)
   balance     Int
