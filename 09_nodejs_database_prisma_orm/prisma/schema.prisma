@@ -16,22 +16,26 @@ model sample {
 }
 
 model Customer {
-  id        String @id @db.VarChar(100)
-  name      String
-  email     String @unique
-  phone     String @unique
-  wallet    Wallet?
-  comments  Comment[]
+  id       String    @id @db.VarChar(100)
+  name     String    @db.VarChar(100)
+  email    String    @unique @db.VarChar(100)
+  phone    String    @unique @db.VarChar(100)
+  wallet   Wallet?
+  comments Comment[]
+  likes    Like[]
+  loves    Product[] @relation("loves") // implicit many to many
 
   @@map("customers")
 }
 
 model Product {
-  id        String @id
-  name      String
-  price     Int
-  stock     Int
-  category  String
+  id       String     @id @db.VarChar(100)
+  name     String     @db.VarChar(100)
+  price    Int        @db.Int
+  stock    Int        @db.SmallInt
+  category String     @db.VarChar(100)
+  likedBy  Like[]
+  lovedBy  Customer[] @relation("loves") // implicit many to many
 
   @@map("products")
 }
@@ -62,4 +66,14 @@ model Comment {
   customer    Customer @relation(fields: [customer_id], references: [id])
 
   @@map("comments") 
+}
+
+model Like {
+  customer_id   String    @db.VarChar(100)
+  product_id    String    @db.VarChar(100)
+  customer      Customer  @relation(fields: [customer_id], references: [id])
+  product       Product   @relation(fields: [product_id], references: [id])
+
+  @@id([customer_id, product_id])
+  @@map("likes")
 }
