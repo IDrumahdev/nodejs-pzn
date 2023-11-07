@@ -16,11 +16,12 @@ model sample {
 }
 
 model Customer {
-  id      String @id @db.VarChar(100)
-  name    String
-  email   String @unique
-  phone   String @unique
-  wallet  Wallet?
+  id        String @id @db.VarChar(100)
+  name      String
+  email     String @unique
+  phone     String @unique
+  wallet    Wallet?
+  comments  Comment[]
 
   @@map("customers")
 }
@@ -50,4 +51,15 @@ model Wallet {
   customer_id String @unique
 
   @@map("wallet")
+}
+
+// Relasi One To Many
+model Comment {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String?
+  customer_id String
+  customer    Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("comments") 
 }
