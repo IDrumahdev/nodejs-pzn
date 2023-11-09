@@ -58,9 +58,7 @@ describe('Prisma Clinet', () => {
         console.info(JSON.stringify(customerdata));
     });
 
-    /**
-     * Masih Error
-     */
+
     it('implicit many to many', async () => {
         const loves = await prismaClient.customer.update({
             where: {
@@ -70,10 +68,10 @@ describe('Prisma Clinet', () => {
                 loves: {
                     connect: [
                         {
-                            id: "P0001"
+                            id: "P001"
                         },
                         {
-                            id: "P0002"
+                            id: "P002"
                         }
                     ]
                 }
