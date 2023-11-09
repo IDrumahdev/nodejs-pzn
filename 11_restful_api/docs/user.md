@@ -93,6 +93,44 @@ Response Body Error :
 ```
 
 ## Get User API
+Endpoint    : GET /api/users/current 
 
+Headers     :
+- Authorization : token
 
+Response Body Success:
+```json
+    {
+        "data" : {
+            "username"  : "rumahdev",
+            "name"      : "Heri Ibnudirsan"
+        }
+    }
+```
+
+Response Body Error :
+```json
+    {
+        "errors" : "Unauthorized"
+    }
+```
 ## Logout User API
+
+Endpoint : DELETE /api/users/logout
+
+Headers     :
+- Authorization : token
+
+Response Body Success :
+```json
+    {
+        "data" : "OK"
+    }
+```
+
+Response Body Error :
+```json
+{
+    "errors" : "Unauthorized"
+}
+```
