@@ -59,7 +59,7 @@ describe('Prisma Clinet', () => {
     });
 
 
-    it('implicit many to many', async () => {
+    it('implicit create many to many', async () => {
         const loves = await prismaClient.customer.update({
             where: {
                 id: "2530429c-79f8-11ee-b962-0242ac120002"
@@ -82,5 +82,24 @@ describe('Prisma Clinet', () => {
         });
 
         console.info(loves);
+    });
+
+    it('implicit find many to many', async () => {
+        const customer = await prismaClient.customer.findMany({
+            where: {
+                loves: {
+                    some: {
+                        name: {
+                            contains : "A"
+                        }
+                    }
+                }
+            },
+            include: {
+                loves: true
+            }
+        });
+
+        console.info(JSON.stringify(customer));
     });
 });
