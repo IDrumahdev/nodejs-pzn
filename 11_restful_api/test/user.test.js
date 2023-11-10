@@ -86,4 +86,43 @@ describe('POST /api/users/login', () => {
         expect(result.body.data.token).toBeDefined();
         expect(result.body.data.token).not.toBe("test");
     });
+
+    // npx jest test/user.test.js -t "User Login reject if request is invalid"
+    it('User Login reject if request is invalid', async () => {
+        const result = await supertest(web)
+            .post('/api/users/login')
+            .send({
+                username: "",
+                password: ""
+            });
+        
+        expect(result.status).toBe(400);
+        expect(result.body.errors).toBeDefined();
+    });
+
+    // npx jest test/user.test.js -t "User Login reject if password is wrong"
+    it('User Login reject if password is wrong', async () => {
+        const result = await supertest(web)
+            .post('/api/users/login')
+            .send({
+                username: "test",
+                password: "salah"
+            });
+        
+        expect(result.status).toBe(401);
+        expect(result.body.errors).toBeDefined();
+    });
+
+    // npx jest test/user.test.js -t "User Login reject if username is wrong"
+    it('User Login reject if username is wrong', async () => {
+        const result = await supertest(web)
+            .post('/api/users/login')
+            .send({
+                username: "salah",
+                password: "rahasia"
+            });
+        
+        expect(result.status).toBe(401);
+        expect(result.body.errors).toBeDefined();
+    });
 });
