@@ -1,7 +1,6 @@
 import supertest from 'supertest';
 import {web} from '../src/application/web.js';
 import { createTestUser, removeTestUser } from './test-util.js';
-import { logger } from '../src/application/logging.js';
 
 describe('POST /api/users', () => {
 
@@ -124,5 +123,38 @@ describe('POST /api/users/login', () => {
         
         expect(result.status).toBe(401);
         expect(result.body.errors).toBeDefined();
+    });
+});
+
+
+describe('GET /api/users/current', () => {
+    
+    beforeEach(async () => {
+        await createTestUser();
+    });
+
+    afterEach(async () => {
+        await removeTestUser();
+    });
+
+    // npx jest test/user.test.js -t "get data user current"
+    it('get data user current', async () => {
+        const result = await supertest(web)
+            .get('/api/users/current')
+            .set('Authorization', 'test');
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.username).toBe('test');
+        expect(result.body.data.name).toBe('test');
+    });
+
+    // npx jest test/user.test.js -t "get user current reject if token invalid"
+    it('get user current reject if token invalid', async () => {
+        const result = await supertest(web)
+            .get('/api/users/current')
+            .set('Authorization', 'salah');
+
+        expect(result.status).toBe(401);
+        expect(result.body.errors).toBeDefined()
     });
 });
