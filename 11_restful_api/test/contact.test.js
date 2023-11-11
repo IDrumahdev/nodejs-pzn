@@ -87,3 +87,74 @@ describe('GET /api/contacts/:contactId', () => {
         expect(result.status).toBe(404);
     });
 });
+
+describe('PUT /api/contacts/:contactId', () => {
+
+    beforeEach(async () => {
+        await createTestUser();
+        await createTestContact();
+    });
+
+    afterEach(async () => {
+        await removeAllTestContact();
+        await removeTestUser();
+    });
+
+    // npx jest test/contact.test.js -t "update contact"
+    it('update contact', async () => {
+        const testContact = await getTestContact();
+        
+        const result = await supertest(web)
+            .put('/api/contacts/' + testContact.id)
+            .set('Authorization', 'test')
+            .send({
+                first_name: "Heri",
+                last_name: "ibnudirsan",
+                email: "ibnudirsan@gmail.com",
+                phone: "8080810100101"
+            });
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.id).toBe(testContact.id);
+        expect(result.body.data.first_name).toBe("Heri");
+        expect(result.body.data.last_name).toBe("ibnudirsan");
+        expect(result.body.data.email).toBe("ibnudirsan@gmail.com");
+        expect(result.body.data.phone).toBe("8080810100101");
+    });
+
+    // npx jest test/contact.test.js -t "update contact reject if request is invalid"
+    it('update contact reject if request is invalid', async () => {
+        const testContact = await getTestContact();
+        
+        const result = await supertest(web)
+            .put('/api/contacts/' + testContact.id)
+            .set('Authorization', 'test')
+            .send({
+                first_name: "",
+                last_name: "",
+                email: "ibnudirsan",
+                phone: ""
+            });
+
+        expect(result.status).toBe(400);
+    });
+
+    // npx jest test/contact.test.js -t "update contact reject if contact is not found"
+    it('update contact reject if contact is not found', async () => {
+        const testContact = await getTestContact();
+        
+        const result = await supertest(web)
+            .put('/api/contacts/' + (testContact.id + 1))
+            .set('Authorization', 'test')
+            .send({
+                first_name: "Heri",
+                last_name: "ibnudirsan",
+                email: "ibnudirsan@gmail.com",
+                phone: "8080810100101"
+            });
+
+        console.log(result);
+
+        expect(result.status).toBe(404);
+    });
+});
