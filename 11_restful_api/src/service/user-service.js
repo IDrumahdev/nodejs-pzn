@@ -90,7 +90,7 @@ const update = async (request) => {
 
     const totalUserInDatabase = await prismaClient.user.count({
         where: {
-            username: username
+            username: user.username
         }
     });
 
@@ -100,17 +100,18 @@ const update = async (request) => {
 
     const data = {};
     if(user.name) {
-        data.user = user.name
+        data.name = user.name;
     }
 
     if(user.password) {
-        data.password = bcrypt.hash(user.password, 10);
+        data.password = await bcrypt.hash(user.password, 10);
     }
 
     return prismaClient.user.update({
         where: {
             username: user.username
         },
+        data: data,
         select: {
             username: true,
             name: true

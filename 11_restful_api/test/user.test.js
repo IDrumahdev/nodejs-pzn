@@ -187,4 +187,45 @@ describe('PATCH /api/users/current', () => {
         const user = await getTestUser();
         expect(await bcrypt.compare("pekanbaru", user.password)).toBe(true);
     });
+
+    // npx jest test/user.test.js -t "update name user current"
+    it('update name user current', async () => {
+        const result = await supertest(web)
+            .patch("/api/users/current")
+            .set('Authorization', 'test')
+            .send({
+                name: "ibnudirsan"
+            });
+        
+        expect(result.status).toBe(200);
+        expect(result.body.data.username).toBe("test");
+        expect(result.body.data.name).toBe("ibnudirsan")
+    });
+
+    // npx jest test/user.test.js -t "update password user current"
+    it('update password user current', async () => {
+        const result = await supertest(web)
+            .patch("/api/users/current")
+            .set('Authorization', 'test')
+            .send({
+                password: "pekanbaru"
+            });
+        
+        expect(result.status).toBe(200);
+        expect(result.body.data.username).toBe("test");
+        expect(result.body.data.name).toBe("test")
+
+        const user = await getTestUser();
+        expect(await bcrypt.compare("pekanbaru", user.password)).toBe(true);
+    });
+
+    // npx jest test/user.test.js -t "update user current reject if data invalid"
+    it('update user current reject if data invalid', async () => {
+        const result = await supertest(web)
+            .patch("/api/users/current")
+            .set('Authorization', 'salah')
+            .send({});
+        
+        expect(result.status).toBe(401);
+    });
 });
