@@ -20,8 +20,17 @@ const createTestUser = async () => {
     });
 }
 
+const getTestUser  = async () => {
+    return prismaClient.user.findUnique({
+        where: {
+            username: "test"
+        }
+    });
+}
+
 
 export {
     removeTestUser,
-    createTestUser
+    createTestUser,
+    getTestUser
 }
