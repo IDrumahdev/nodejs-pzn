@@ -36,10 +36,31 @@ const removeAllTestContact = async () => {
     });
 }
 
+const createTestContact = async () => {
+    await prismaClient.contact.create({
+        data: {
+            username: "test",
+            first_name: "test",
+            last_name: "test",
+            email: "test@test.com",
+            phone: "09801029101010"
+        }
+    });
+}
+
+const getTestContact = async () => {
+    return prismaClient.contact.findFirst({
+        where: {
+            username: "test"
+        }
+    });
+}
 
 export {
     removeTestUser,
     createTestUser,
     getTestUser,
-    removeAllTestContact
+    removeAllTestContact,
+    createTestContact,
+    getTestContact
 }

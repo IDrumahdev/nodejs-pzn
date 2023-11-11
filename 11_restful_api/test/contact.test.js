@@ -1,5 +1,5 @@
 import { web } from '../src/application/web';
-import {createTestUser, removeTestUser, removeAllTestContact} from '../test/test-util';
+import {createTestUser, removeTestUser, removeAllTestContact, createTestContact, getTestContact} from '../test/test-util';
 import supertest from 'supertest';
 
 describe('POST /api/contacts', () => {
@@ -51,4 +51,28 @@ describe('POST /api/contacts', () => {
 
 });
 
+describe('GET /api/contacts/:contactId', () => {
+    beforeEach(async () => {
+        await createTestUser();
+        await createTestContact();
+    });
 
+    afterEach(async () => {
+        await removeAllTestContact();
+        await removeTestUser();
+    });
+
+    it('get contact', async () => {
+        const testContact   = await getTestContact();
+        const result        = await supertest(web)
+            .get('/api/contacts/' + testContact.id)
+            .set('Authorization', 'test')
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.id).toBe(testContact.id);
+        expect(result.body.data.first_name).toBe(testContact.first_name);
+        expect(result.body.data.last_name).toBe(testContact.last_name);
+        expect(result.body.data.email).toBe(testContact.email);
+        expect(result.body.data.phone).toBe(testContact.phone);
+    });
+});
