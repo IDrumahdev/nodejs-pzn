@@ -62,6 +62,7 @@ describe('GET /api/contacts/:contactId', () => {
         await removeTestUser();
     });
 
+    // npx jest test/contact.test.js -t "get contact"
     it('get contact', async () => {
         const testContact   = await getTestContact();
         const result        = await supertest(web)
@@ -74,5 +75,15 @@ describe('GET /api/contacts/:contactId', () => {
         expect(result.body.data.last_name).toBe(testContact.last_name);
         expect(result.body.data.email).toBe(testContact.email);
         expect(result.body.data.phone).toBe(testContact.phone);
+    });
+
+    // npx jest test/contact.test.js -t "get contact 404 if contact id is not found"
+    it('get contact 404 if contact id is not found', async () => {
+        const testContact   = await getTestContact();
+        const result        = await supertest(web)
+            .get('/api/contacts/' + (testContact.id+1))
+            .set('Authorization', 'test')
+
+        expect(result.status).toBe(404);
     });
 });
