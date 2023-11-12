@@ -1,5 +1,5 @@
 import { web } from '../src/application/web';
-import {createTestUser, removeTestUser, removeAllTestContact, createTestContact, getTestContact} from '../test/test-util';
+import {createTestUser, removeTestUser, removeAllTestContact, createTestContact, getTestContact, createTestManyContacts} from '../test/test-util';
 import supertest from 'supertest';
 
 describe('POST /api/contacts', () => {
@@ -193,5 +193,29 @@ describe('DELETE /api/contacts/:contactId', () => {
             .set('Authorization', 'test');
         
         expect(result.status).toBe(404);
+    });
+});
+
+describe('GET /api/contacts', () => {
+    beforeEach(async () => {
+        await createTestUser();
+        await createTestManyContacts();
+    });
+
+    afterEach(async () => {
+        await removeAllTestContact();
+        await removeTestUser();
+    });
+
+    it('search contact without parameter', async () => {
+        const result = await supertest(web)
+            .get('/api/contacts')
+            .set('Authorization', 'test')
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.length).toBe(10);
+        expect(result.body.paging.page).toBe(1);
+        expect(result.body.paging.total_page).toBe(2);
+        expect(result.body.paging.total_item).toBe(15);
     });
 });
