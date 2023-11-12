@@ -114,10 +114,10 @@ const search = async (user, request) => {
             OR: [
                 {
                     first_name: {
-                        contains: request.first_name
+                        contains: request.name
                     },
                     last_name: {
-                        contains: request.last_name
+                        contains: request.name
                     }
                 }
             ]

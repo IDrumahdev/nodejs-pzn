@@ -207,6 +207,7 @@ describe('GET /api/contacts', () => {
         await removeTestUser();
     });
 
+    // npx jest test/contact.test.js -t "search contact without parameter"
     it('search contact without parameter', async () => {
         const result = await supertest(web)
             .get('/api/contacts')
@@ -217,5 +218,73 @@ describe('GET /api/contacts', () => {
         expect(result.body.paging.page).toBe(1);
         expect(result.body.paging.total_page).toBe(2);
         expect(result.body.paging.total_item).toBe(15);
+    });
+
+    // npx jest test/contact.test.js -t "search contact to page 2"
+    it('search contact to page 2', async () => {
+        const result = await supertest(web)
+            .get('/api/contacts')
+            .query({
+                page: 2
+            })
+            .set('Authorization', 'test')
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.length).toBe(5);
+        expect(result.body.paging.page).toBe(2);
+        expect(result.body.paging.total_page).toBe(2);
+        expect(result.body.paging.total_item).toBe(15);
+    });
+
+    // npx jest test/contact.test.js -t "search contact using name"
+    it('search contact using name', async () => {
+        const result = await supertest(web)
+            .get('/api/contacts')
+            .query({
+                name: "test 1"
+            })
+            .set('Authorization', 'test')
+            
+        expect(result.status).toBe(200);
+        expect(result.body.data.length).toBe(6);
+        expect(result.body.paging.page).toBe(1);
+        expect(result.body.paging.total_page).toBe(1);
+        expect(result.body.paging.total_item).toBe(6);
+    });
+
+    // npx jest test/contact.test.js -t "search contact using email"
+    it('search contact using email', async () => {
+        const result = await supertest(web)
+            .get('/api/contacts')
+            .query({
+                email: "test1"
+            })
+            .set('Authorization', 'test')
+            
+            console.log(result);
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.length).toBe(6);
+        expect(result.body.paging.page).toBe(1);
+        expect(result.body.paging.total_page).toBe(1);
+        expect(result.body.paging.total_item).toBe(6);
+    });
+
+    // npx jest test/contact.test.js -t "search contact using phone"
+    it('search contact using phone', async () => {
+        const result = await supertest(web)
+            .get('/api/contacts')
+            .query({
+                phone: "098010291010101"
+            })
+            .set('Authorization', 'test')
+            
+            console.log(result);
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.length).toBe(6);
+        expect(result.body.paging.page).toBe(1);
+        expect(result.body.paging.total_page).toBe(1);
+        expect(result.body.paging.total_item).toBe(6);
     });
 });
