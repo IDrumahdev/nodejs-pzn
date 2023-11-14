@@ -2,7 +2,7 @@ import {validate} from '../validation/validation.js';
 import {prismaClient} from '../application/database.js';
 import {getContactValidation} from '../validation/contact-validation.js';
 import { ResponseError } from '../error/response-error.js';
-import { createAddressValidation, updateAddressValidation } from '../validation/address-validation.js';
+import { createAddressValidation, getAddressValidation, updateAddressValidation } from '../validation/address-validation.js';
 
 
 const checkContactMustExists = async (user, contactId) => {
@@ -96,8 +96,31 @@ const update = async (user, contactId, resquest) => {
     });
 }
 
+const remove = async (user, contactId, addressId) => {
+    contactId     = await checkContactMustExists(user, contactId);
+    addressId     = validate(getAddressValidation, addressId);
+    
+    const totalAddressInDatabase = await prismaClient.address.count({
+        where: {
+            contact_id: contactId,
+            id: addressId
+        }
+    });
+
+    if(totalAddressInDatabase !== 1) {
+        throw new ResponseError(404, "Address is not foud.")
+    }
+
+    return prismaClient.address.delete({
+        where: {
+            id: addressId
+        }
+    });
+}
+
 export default {
     create,
     get,
-    update
+    update,
+    remove
 }

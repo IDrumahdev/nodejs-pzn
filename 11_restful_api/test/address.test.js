@@ -235,3 +235,58 @@ describe('PUT /api/contacts/:contactId/addresses/:addressId', () => {
         expect(result.status).toBe(404);
     });
 });
+
+describe('DELETE /api/contacts/:contactId/addresses/:addressId', () => {
+
+    beforeEach(async () => {
+        await createTestUser();
+        await createTestContact();
+        await createTestAddress();
+    });
+
+    afterEach(async () => {
+        await removeAllTestAddresses();
+        await removeAllTestContact();
+        await removeTestUser();
+    });
+    
+    // npx jest test/address.test.js -t "delete address By Contact ID and Address Id"
+    it('delete address By Contact ID and Address Id', async () => {
+        const testContact   = await getTestContact();
+        let testAddress     = await getTestAddress();
+
+        const result = await supertest(web)
+            .delete('/api/contacts/'+ testContact.id + '/addresses/' + testAddress.id)
+            .set('Authorization', 'test');
+        
+        expect(result.status).toBe(200);
+        expect(result.body.data).toBe("OK");
+
+        testAddress = await getTestAddress();
+        expect(testAddress).toBeNull();
+    });
+
+    // npx jest test/address.test.js -t "delete address reject if address is not found"
+    it('delete address reject if address is not found', async () => {
+        const testContact   = await getTestContact();
+        let testAddress     = await getTestAddress();
+
+        const result = await supertest(web)
+            .delete('/api/contacts/'+ testContact.id + '/addresses/' + (testAddress.id + 1))
+            .set('Authorization', 'test');
+        
+        expect(result.status).toBe(404);
+    });
+
+    // npx jest test/address.test.js -t "delete address reject if contact is not found"
+    it('delete address reject if contact is not found', async () => {
+        const testContact   = await getTestContact();
+        let testAddress     = await getTestAddress();
+
+        const result = await supertest(web)
+            .delete('/api/contacts/'+ (testContact.id + 1) + '/addresses/' + testAddress.id)
+            .set('Authorization', 'test');
+        
+        expect(result.status).toBe(404);
+    });
+});
