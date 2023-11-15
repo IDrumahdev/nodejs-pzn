@@ -16,6 +16,7 @@ describe('Belajar Nodejs Redis', () => {
         await redis.quit();
     })
 
+    // npx jest test/string.test.js -t "Conected Redis"
     it('Conected Redis', async () => {
         const pong = await redis.ping();
         expect(pong).toBe("PONG");
